@@ -12,6 +12,7 @@ package P_Arbre_Binaire is
    
    package P_Liste_Chainee_T is new P_Liste_Chainee(T_Valeur      => T,
                                                     afficherElement => afficherContenu);
+   use P_Liste_Chainee_T;
 
    function creerArbreBinaire(contenu: in T) return Arbre_Binaire;
    procedure setEnfantDroit(arbre: in Arbre_Binaire; parent: in T; enfant: in T);
@@ -24,14 +25,14 @@ package P_Arbre_Binaire is
    
    function nombreNoeuds(arbre: in Arbre_Binaire) return Integer;
    
-   function getNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer) return P_Liste_Chainee_T.Liste_Chainee;
-   procedure getNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer; liste: in out P_Liste_Chainee_T.Liste_Chainee);
+   function getNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer) return Liste_Chainee;
+   procedure getNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer; liste: in out Liste_Chainee);
    
-   procedure getNoeudsViaNombreEnfants(arbre: in Arbre_Binaire; nombre_enfants: in Integer) return P_Liste_Chainee_T.Liste_Chainee;
-   procedure getNoeudsViaNombreEnfants(arbre: in Arbre_Binaire; nombre_enfants: in Integer; liste: in out P_Liste_Chainee_T.Liste_Chainee);
+   function getNoeudsViaNombreEnfants(arbre: in Arbre_Binaire; nombre_enfants: in Integer) return Liste_Chainee;
+   procedure getNoeudsViaNombreEnfants(arbre: in Arbre_Binaire; nombre_enfants: in Integer; liste: in out Liste_Chainee);
 
    function getNoeudAvant(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return T;
-   function getSuccessionNoeudsAvant(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return P_Liste_Chainee_T.Liste_Chainee;
+   function getSuccessionNoeudsAvant(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return Liste_Chainee;
 
 private
    type Noeud;

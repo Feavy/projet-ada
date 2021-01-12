@@ -12,7 +12,7 @@ package body P_Personne is
    
    procedure afficher(laPersonne: in Personne) is
    begin
-      Put("--"&laPersonne.id'Image);
+      Put(laPersonne.id'Image);
    end afficher;
    
    function "="(a: in Personne; b: in Personne) return Boolean is

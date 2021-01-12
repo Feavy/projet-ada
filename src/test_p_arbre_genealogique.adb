@@ -5,6 +5,7 @@ with Ada.Text_IO; use Ada.Text_IO;
 
 procedure test_p_arbre_genealogique is
    arbre: Arbre_Genealogique;
+   liste: Liste_Personne;
 begin
     --18
     -- père : 2
@@ -38,7 +39,11 @@ begin
    Put_Line("Suppression du noeud n°2");
    New_Line;
    
-   P_Arbre_Genealogique.supprimerNoeud(arbre, 2);
+   P_Arbre_Genealogique.supprimerPersonne(arbre, 2);
    
    P_Arbre_Genealogique.afficher(arbre);
+   
+   Put_Line("Personnes avec un seul parent :");
+   liste := getPersonnesAvecUnSeulParent(arbre);
+   afficher(liste);
 end test_p_arbre_genealogique;

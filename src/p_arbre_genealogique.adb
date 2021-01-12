@@ -7,11 +7,7 @@ package body P_Arbre_Genealogique is
 
    procedure setPere(noeud: in Arbre_Genealogique; enfant: in Personne; pere: in Personne) is
    begin
-      P_Arbre_Binaire_Personne.setEnfantGauche(
-                                               P_Arbre_Binaire_Personne.Arbre_Binaire(noeud),
-                                               enfant,
-                                               pere
-                                              );
+      setEnfantGauche(Arbre_Binaire(noeud), enfant, pere);
    end setPere;
    
    procedure setPere(arbre: Arbre_Genealogique; idFils: in Integer; pere: in Personne) is
@@ -22,11 +18,7 @@ package body P_Arbre_Genealogique is
    
    procedure setMere(noeud: in Arbre_Genealogique; enfant: in Personne; mere: in Personne) is
    begin
-      P_Arbre_Binaire_Personne.setEnfantDroit(
-                                              P_Arbre_Binaire_Personne.Arbre_Binaire(noeud),
-                                              enfant,
-                                              mere
-                                             );
+      setEnfantDroit(Arbre_Binaire(noeud), enfant, mere);
    end setMere;
    
    procedure setMere(arbre: Arbre_Genealogique; idFils: in Integer; mere: in Personne) is
@@ -37,71 +29,64 @@ package body P_Arbre_Genealogique is
 
    function getSousArbre(arbre: in Arbre_Genealogique; id: in Integer) return Arbre_Genealogique is
    begin
-      -- note : à remplacer par une map
-      return Arbre_Genealogique(
-                                P_Arbre_Binaire_Personne.getSousArbre(
-                                  P_Arbre_Binaire_Personne.Arbre_Binaire(arbre), creerPersonne(id)
-                                 )
-                               );
+      return Arbre_Genealogique(getSousArbre(Arbre_Binaire(arbre), creerPersonne(id)));
    end getSousArbre;
    
    procedure afficher(arbre: in Arbre_Genealogique) is
    begin
-      P_Arbre_Binaire_Personne.afficher(P_Arbre_Binaire_Personne.Arbre_Binaire(arbre));
+      afficher(Arbre_Binaire(arbre));
    end afficher;
    
-   procedure supprimerPersonneEtAncetres(arbre: in out Arbre_Genealogique; id: in Integer) is
+   procedure supprimerPersonne(arbre: in out Arbre_Genealogique; id: in Integer) is
    begin
-      P_Arbre_Binaire_Personne.supprimerNoeud(
-                                              P_Arbre_Binaire_Personne.Arbre_Binaire(arbre),
-                                              creerPersonne(id)
-                                                );
-   end supprimerPersonneEtAncetres;
+      supprimerNoeud(arbre => Arbre_Binaire(arbre),
+                     noeud => creerPersonne(id));
+   end supprimerPersonne;
    
    function nombrePersonnes(arbre: in Arbre_Genealogique) return Integer is
    begin
-      return P_Arbre_Binaire_Personne.nombreNoeuds(P_Arbre_Binaire_Personne.Arbre_Binaire(arbre));
+      return nombreNoeuds(Arbre_Binaire(arbre));
    end nombrePersonnes;
    
    
-   function getPersonnesAvecUnSeulParent(arbre: in Arbre_Genealogique) return P_Liste_Chainee_T.Liste_Chainee is
+   function getPersonnesAvecUnSeulParent(arbre: in Arbre_Genealogique) return Liste_Personne is
    begin
-      return P_Arbre_Binaire_Personne.getNoeudsViaNombreEnfants(arbre          => arbre,
-                                                                nombre_enfants => 1);
+      return Liste_Personne(getNoeudsViaNombreEnfants(arbre => Arbre_Binaire(arbre),
+                                                      nombre_enfants => 1));
    end getPersonnesAvecUnSeulParent;
    
-   function getPersonnesAvecDeuxParents(arbre: in Arbre_Genealogique) return P_Liste_Chainee_T.Liste_Chainee is
+   function getPersonnesAvecDeuxParents(arbre: in Arbre_Genealogique) return Liste_Personne is
    begin
-      return P_Arbre_Binaire_Personne.getNoeudsViaNombreEnfants(arbre          => arbre,
-                                                                nombre_enfants => 2);
+      return Liste_Personne(getNoeudsViaNombreEnfants(arbre => Arbre_Binaire(arbre),
+                                                      nombre_enfants => 2));
    end getPersonnesAvecDeuxParents;
    
-   function getPersonnesSansParent(arbre: in Arbre_Genealogique) return P_Liste_Chainee_T.Liste_Chainee is
+   function getPersonnesSansParent(arbre: in Arbre_Genealogique) return Liste_Personne is
    begin
-      return P_Arbre_Binaire_Personne.getNoeudsViaNombreEnfants(arbre          => arbre,
-                                                                nombre_enfants => 0);
+      return Liste_Personne(getNoeudsViaNombreEnfants(arbre => Arbre_Binaire(arbre),
+                                                      nombre_enfants => 0));
    end getPersonnesSansParent;
    
 
-   function getAncetres(arbre: in Arbre_Binaire; noeud: in T; generation: Integer) return P_Liste_Chainee_T.Liste_Chainee is
+   function getAncetres(arbre: in Arbre_Genealogique; fildId: in Integer; generation: in Integer) return Liste_Personne is
    begin
-      return P_Arbre_Binaire_Personne.getNoeudsApres(arbre      => arbre,
-                                                     profondeur => generation);
+      return Liste_Personne(getNoeudsApres(arbre => Arbre_Binaire(arbre),
+                                           profondeur => generation));
    end getAncetres;
    
-   function getDescendant(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return T is
+   function getDescendant(arbre: in Arbre_Genealogique; filsId: in Integer; generation: in Integer) return Personne is
    begin
-      return P_Arbre_Binaire_Personne.getNoeudAvant(arbre      => arbre,
-                                                    noeud      => noeud,
-                                                    profondeur => profondeur);
+      return getNoeudAvant(arbre      => Arbre_Binaire(arbre),
+                           noeud      => creerPersonne(filsId),
+                           profondeur => generation);
    end getDescendant;
    
       
-   function getDescendance(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return P_Liste_Chainee_T.Liste_Chainee is
+   function getDescendance(arbre: in Arbre_Genealogique; filsId: in Integer; generation: in Integer) return Liste_Personne is
    begin
-      return P_Arbre_Binaire_Personne.getSuccessionNoeudsAvant(arbre      => arbre,
-                                                               noeud      => noeud,
-                                                               profondeur => profondeur);
+      return Liste_Personne(getSuccessionNoeudsAvant(arbre      => Arbre_Binaire(arbre),
+                                                     noeud      => creerPersonne(filsId),
+                                                     profondeur => generation));
    end getDescendance;
    
    

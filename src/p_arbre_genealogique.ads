@@ -6,8 +6,8 @@ package P_Arbre_Genealogique is
    package P_Arbre_Binaire_Personne is new P_Arbre_Binaire(T               => P_Personne.Personne,
                                                            afficherContenu => P_Personne.afficher,
                                                            "="             => P_Personne."=");
-   
-   type Arbre_Genealogique is new P_Arbre_Binaire_Personne.Arbre_Binaire;
+   use P_Arbre_Binaire_Personne;
+   type Arbre_Genealogique is new Arbre_Binaire;
    
    function creerArbreGenealogique(laPersonne: in Personne) return Arbre_Genealogique;
    
@@ -23,14 +23,17 @@ package P_Arbre_Genealogique is
    
    function nombrePersonnes(arbre: in Arbre_Genealogique) return Integer;
    
-   procedure supprimerPersonneEtAncetres(arbre: in out Arbre_Genealogique; id: in Integer);
+   procedure supprimerPersonne(arbre: in out Arbre_Genealogique; id: in Integer);
    
-   function getPersonnesAvecUnSeulParent(arbre: in Arbre_Genealogique) return P_Liste_Chainee_T.Liste_Chainee;
-   function getPersonnesAvecDeuxParents(arbre: in Arbre_Genealogique) return P_Liste_Chainee_T.Liste_Chainee;
-   function getPersonnesSansParent(arbre: in Arbre_Genealogique) return P_Liste_Chainee_T.Liste_Chainee;
+   use P_Arbre_Binaire_Personne.P_Liste_Chainee_T;
+   type Liste_Personne is new Liste_Chainee;
+   
+   function getPersonnesAvecUnSeulParent(arbre: in Arbre_Genealogique) return Liste_Personne;
+   function getPersonnesAvecDeuxParents(arbre: in Arbre_Genealogique) return Liste_Personne;
+   function getPersonnesSansParent(arbre: in Arbre_Genealogique) return Liste_Personne;
 
-   function getAncetres(arbre: in Arbre_Binaire; noeud: in T) return P_Liste_Chainee_T.Liste_Chainee;
-   function getDescendant(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return T;
-   function getDescendance(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return P_Liste_Chainee_T.Liste_Chainee;
+   function getAncetres(arbre: in Arbre_Genealogique; fildId: in Integer; generation: in Integer) return Liste_Personne;
+   function getDescendant(arbre: in Arbre_Genealogique; filsId: in Integer; generation: in Integer) return Personne;
+   function getDescendance(arbre: in Arbre_Genealogique; filsId: in Integer; generation: in Integer) return Liste_Personne;
    
 end P_Arbre_Genealogique;

@@ -117,6 +117,7 @@ package body P_Arbre_Binaire is
       for i in 1..espace*4 loop
          Put(" ");
       end loop;
+      Put("-- ");
       
       afficherContenu(arbre.contenu);
       New_Line;
@@ -142,14 +143,14 @@ package body P_Arbre_Binaire is
       return 1+nombreNoeuds(arbre.enfant_gauche)+nombreNoeuds(arbre.enfant_droit);
    end nombreNoeuds;
    
-   function getNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer) return P_Liste_Chainee_T.Liste_Chainee is
-      liste: P_Liste_Chainee_T.Liste_Chainee;
+   function getNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer) return Liste_Chainee is
+      liste: Liste_Chainee;
    begin
       getNoeudsApres(arbre, profondeur, liste);
       return liste;
    end getNoeudsApres;
    
-   procedure getNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer; liste: in out P_Liste_Chainee_T.Liste_Chainee) is
+   procedure getNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer; liste: in out Liste_Chainee) is
    begin
       if arbre = null then
          return;
@@ -165,14 +166,14 @@ package body P_Arbre_Binaire is
    end getNoeudsApres;
    
       
-   procedure getNoeudsViaNombreEnfants(arbre: in Arbre_Binaire; nombre_enfants: in Integer) return P_Liste_Chainee_T.Liste_Chainee is
-      liste: P_Liste_Chainee_T.Liste_Chainee := null;
+   function getNoeudsViaNombreEnfants(arbre: in Arbre_Binaire; nombre_enfants: in Integer) return Liste_Chainee is
+      liste: Liste_Chainee := creerListe;
    begin
       getNoeudsViaNombreEnfants(arbre, nombre_enfants, liste);
       return liste;
    end getNoeudsViaNombreEnfants;
    
-   procedure getNoeudsViaNombreEnfants(arbre: in Arbre_Binaire; nombre_enfants: in Integer; liste: in out P_Liste_Chainee_T.Liste_Chainee) is
+   procedure getNoeudsViaNombreEnfants(arbre: in Arbre_Binaire; nombre_enfants: in Integer; liste: in out Liste_Chainee) is
       nombre_enfants_courant: Integer := 0;
    begin
       if arbre = null then
@@ -244,9 +245,9 @@ package body P_Arbre_Binaire is
       return getArbreAvant(arbre, noeud, profondeur).contenu;
    end getNoeudAvant;
    
-   function getSuccessionNoeudsAvant(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return P_Liste_Chainee_T.Liste_Chainee is
+   function getSuccessionNoeudsAvant(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return Liste_Chainee is
       noeud2: Arbre_Binaire;
-      liste_noeuds: P_Liste_Chainee_T.Liste_Chainee;
+      liste_noeuds: Liste_Chainee;
    begin
       noeud2 := getArbreAvant(arbre, noeud, profondeur);
       
