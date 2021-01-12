@@ -198,24 +198,16 @@ package body P_Arbre_Binaire is
    function getArbreAvant(arbre: in Arbre_Binaire; noeud: in Arbre_Binaire) return Arbre_Binaire is
       noeud_avant: Arbre_Binaire;
    begin
+      if arbre.enfant_droit = noeud or arbre.enfant_gauche = noeud then
+         return arbre;
+      end if;
+      
       if arbre.enfant_droit /= null then
-         if arbre.enfant_droit = noeud then
-            noeud_avant := arbre;
-         else
-            noeud_avant := getArbreAvant(arbre, arbre.enfant_droit);
-         end if;
+        noeud_avant := getArbreAvant(arbre.enfant_droit, noeud);
       end if;
-      
-      if noeud_avant /= null then
-         return noeud_avant;
-      end if;
-      
-      if arbre.enfant_gauche /= null then
-         if arbre.enfant_gauche = noeud then
-            noeud_avant := arbre;
-         else
-            noeud_avant := getArbreAvant(arbre, arbre.enfant_gauche);
-         end if;
+   
+      if noeud_avant = null and arbre.enfant_gauche /= null then
+         noeud_avant := getArbreAvant(arbre.enfant_gauche, noeud);
       end if;
       
       return noeud_avant;
@@ -240,7 +232,6 @@ package body P_Arbre_Binaire is
    end getArbreAvant;
    
    function getNoeudAvant(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return T is
-      sous_arbre: Arbre_Binaire := getSousArbre(arbre, noeud);
    begin
       return getArbreAvant(arbre, noeud, profondeur).contenu;
    end getNoeudAvant;

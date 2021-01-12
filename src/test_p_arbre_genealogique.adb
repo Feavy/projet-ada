@@ -17,23 +17,44 @@ begin
         -- mère : 33
             -- père : 25
             -- mère : 42
-   arbre := creerArbreGenealogique(creerPersonne(18));
-   P_Arbre_Genealogique.setPere(arbre, 18, creerPersonne(2));
-   P_Arbre_Genealogique.setMere(arbre, 18, creerPersonne(8));
+   arbre := creerArbreGenealogique(creerPersonne(18, "Jean", "Machin"));
+   P_Arbre_Genealogique.setPere(arbre, 18, creerPersonne(2, "Paul", "Machin"));
+   P_Arbre_Genealogique.setMere(arbre, 18, creerPersonne(8, "Claire", "Machine"));
    
-   P_Arbre_Genealogique.setPere(arbre, 2, creerPersonne(15));
-   P_Arbre_Genealogique.setMere(arbre, 2, creerPersonne(26));
+   P_Arbre_Genealogique.setPere(arbre, 2, creerPersonne(15, "Pedro", "Machin"));
+   P_Arbre_Genealogique.setMere(arbre, 2, creerPersonne(26, "Samia", "Nassri"));
    
-   P_Arbre_Genealogique.setMere(arbre, 15, creerPersonne(5));
+   P_Arbre_Genealogique.setMere(arbre, 15, creerPersonne(5, "Camille", "Machin"));
       
-   P_Arbre_Genealogique.setPere(arbre, 26, creerPersonne(4));
+   P_Arbre_Genealogique.setPere(arbre, 26, creerPersonne(4, "Frédéric", "Nassri"));
 
-   P_Arbre_Genealogique.setMere(arbre, 8, creerPersonne(33));
+   P_Arbre_Genealogique.setMere(arbre, 8, creerPersonne(33, "Claire", "Dupont"));
 
-   P_Arbre_Genealogique.setPere(arbre, 33, creerPersonne(25));
-   P_Arbre_Genealogique.setMere(arbre, 33, creerPersonne(42));
+   P_Arbre_Genealogique.setPere(arbre, 33, creerPersonne(25, "Fredo", "Dupont"));
+   P_Arbre_Genealogique.setMere(arbre, 33, creerPersonne(42, "Justine", "Delaqueduc"));
    
    P_Arbre_Genealogique.afficher(arbre);
+   
+   New_Line;
+   
+   Put_Line("Personnes sans parent :");
+   liste := getPersonnesSansParent(arbre);
+   afficher(liste);
+   
+   New_Line;
+   
+   Put_Line("Personnes avec un seul parent :");
+   liste := getPersonnesAvecUnSeulParent(arbre);
+   afficher(liste);
+   
+   New_Line;
+   
+   Put_Line("Personnes avec deux parents :");
+   liste := getPersonnesAvecDeuxParents(arbre);
+   afficher(liste);
+   
+   Put_Line("Deuxième descendant de la personne n° 5 :");
+   afficher(getDescendant(arbre, 5, 2));
    
    New_Line;
    Put_Line("Suppression du noeud n°2");
@@ -42,8 +63,4 @@ begin
    P_Arbre_Genealogique.supprimerPersonne(arbre, 2);
    
    P_Arbre_Genealogique.afficher(arbre);
-   
-   Put_Line("Personnes avec un seul parent :");
-   liste := getPersonnesAvecUnSeulParent(arbre);
-   afficher(liste);
 end test_p_arbre_genealogique;

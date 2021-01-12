@@ -31,6 +31,8 @@ package P_Arbre_Binaire is
    function getNoeudsViaNombreEnfants(arbre: in Arbre_Binaire; nombre_enfants: in Integer) return Liste_Chainee;
    procedure getNoeudsViaNombreEnfants(arbre: in Arbre_Binaire; nombre_enfants: in Integer; liste: in out Liste_Chainee);
 
+   function getArbreAvant(arbre: in Arbre_Binaire; noeud: in Arbre_Binaire) return Arbre_Binaire;
+   
    function getNoeudAvant(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return T;
    function getSuccessionNoeudsAvant(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return Liste_Chainee;
 
