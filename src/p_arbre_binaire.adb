@@ -238,6 +238,8 @@ package body P_Arbre_Binaire is
    function getNoeudAvant(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return T is
    begin
       return getArbreAvant(arbre, noeud, profondeur).contenu;
+   exception
+         when Constraint_Error => raise NoeudInexistantException;
    end getNoeudAvant;
    
    function getSuccessionNoeudsAvant(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return Liste_Chainee is

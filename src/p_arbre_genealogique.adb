@@ -5,9 +5,9 @@ package body P_Arbre_Genealogique is
       return Arbre_Genealogique(P_Arbre_Binaire_Personne.creerArbreBinaire(laPersonne));
    end creerArbreGenealogique;
 
-   procedure setPere(noeud: in Arbre_Genealogique; enfant: in Personne; pere: in Personne) is
+   procedure setPere(arbre: in Arbre_Genealogique; enfant: in Personne; pere: in Personne) is
    begin
-      setEnfantGauche(Arbre_Binaire(noeud), enfant, pere);
+      setEnfantGauche(Arbre_Binaire(arbre), enfant, pere);
    end setPere;
    
    procedure setPere(arbre: Arbre_Genealogique; idFils: in Integer; pere: in Personne) is
@@ -16,9 +16,9 @@ package body P_Arbre_Genealogique is
    end setPere;
    
    
-   procedure setMere(noeud: in Arbre_Genealogique; enfant: in Personne; mere: in Personne) is
+   procedure setMere(arbre: in Arbre_Genealogique; enfant: in Personne; mere: in Personne) is
    begin
-      setEnfantDroit(Arbre_Binaire(noeud), enfant, mere);
+      setEnfantDroit(Arbre_Binaire(arbre), enfant, mere);
    end setMere;
    
    procedure setMere(arbre: Arbre_Genealogique; idFils: in Integer; mere: in Personne) is
@@ -73,9 +73,9 @@ package body P_Arbre_Genealogique is
    end getPersonnesSansParent;
    
 
-   function getAncetres(arbre: in Arbre_Genealogique; fildId: in Integer; generation: in Integer) return Liste_Personne is
+   function getAncetres(arbre: in Arbre_Genealogique; filsId: in Integer; generation: in Integer) return Liste_Personne is
    begin
-      return Liste_Personne(getNoeudsApres(arbre      => Arbre_Binaire(getSousArbre(arbre, fildId)),
+      return Liste_Personne(getNoeudsApres(arbre      => Arbre_Binaire(getSousArbre(arbre, filsId)),
                                            profondeur => generation));
    end getAncetres;
    
@@ -84,6 +84,8 @@ package body P_Arbre_Genealogique is
       return getNoeudAvant(arbre      => Arbre_Binaire(arbre),
                            noeud      => creerPersonne(filsId),
                            profondeur => generation);
+   exception
+         when NoeudInexistantException => raise PersonneInconnueException;
    end getDescendant;
    
       

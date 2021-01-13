@@ -73,4 +73,8 @@ begin
    P_Arbre_Genealogique.supprimerPersonne(arbre, 2);
    
    P_Arbre_Genealogique.afficher(arbre);
+   
+   New_Line;
+   Put_Line("Obtention d'un descendant inconnu.");
+   afficher(getDescendant(arbre, 18, 1));
 end test_p_arbre_genealogique;

@@ -5,7 +5,13 @@ generic
    with procedure afficherContenu(contenu: in T);
    with function "="(a: in T; b: in T) return Boolean;
 package P_Arbre_Binaire is
+   --
+   -- Levée si une fonction/procédure est appliquée sur un arbre null.
+   --
    ArbreVideException: Exception;
+   --
+   -- Levée si un noeud de l'arbre n'existe pas.
+   --
    NoeudInexistantException: Exception;
      
    type Arbre_Binaire is private;
@@ -14,27 +20,75 @@ package P_Arbre_Binaire is
                                                     afficherElement => afficherContenu);
    use P_Liste_Chainee_T;
 
+   --
+   -- Crée un arbre binaire ayant pour racine le noeud passé en paramètre.
+   --
    function creerArbreBinaire(contenu: in T) return Arbre_Binaire;
+   --
+   -- Définit l'enfant droit 'enfant' du noeud 'parent' contenu dans l'arbre 'arbre'
+   --
    procedure setEnfantDroit(arbre: in Arbre_Binaire; parent: in T; enfant: in T);
+   --
+   -- Définit l'enfant gauche 'enfant' du noeud 'parent' contenu dans l'arbre 'arbre'
+   --
    procedure setEnfantGauche(arbre: in Arbre_Binaire; parent: in T; enfant: in T);
+   --
+   -- Supprime le noeud 'noeud' et ses enfants de l'arbre binaire 'arbre'
+   --
    procedure supprimerNoeud(arbre: in out Arbre_Binaire; noeud: in T);
+   --
+   -- Obtient le sous-arbre de l'arbre 'arbre' ayant pour racine 'noeud'
+   --
    function getSousArbre(arbre: in Arbre_Binaire; noeud: in T) return Arbre_Binaire;
+   --
+   -- Retourne True si l'arbre 'arbre' contient le noeud 'noeud'
+   --
    function possedeNoeud(arbre: in Arbre_Binaire; noeud: in T) return Boolean;
-   -- Affiche l'arbre binaire en version préfixe
+   --
+   -- Affiche l'arbre binaire 'arbre' en version préfixe
+   --
    procedure afficher(arbre: in Arbre_Binaire);
+   --
+   -- Affiche l'arbre binaire 'arbre' en version préfixe à partir du noeud 'noeud_depart'
+   --
    procedure afficher(arbre: in Arbre_Binaire; noeud_depart: in T);
    
+   --
+   -- Renvoie le nombre de noeuds contenus dans l'arbre 'arbre'
+   --
    function nombreNoeuds(arbre: in Arbre_Binaire) return Integer;
    
+   --
+   -- Renvoie la liste des enfants du noeud racine de l'arbre 'arbre' qui sont à une distance 'profondeur' de lui
+   --
    function getNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer) return Liste_Chainee;
+   --
+   -- Peuple la liste 'liste' avec les enfants du noeud racine de l'arbre 'arbre' qui sont à une distance 'profondeur' de lui
+   --
    procedure getNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer; liste: in out Liste_Chainee);
    
+   --
+   -- Renvoie la liste des noeuds contenus dans l'arbre 'arbre' ayant 'nombre_enfant' enfants.
+   --
    function getNoeudsViaNombreEnfants(arbre: in Arbre_Binaire; nombre_enfants: in Integer) return Liste_Chainee;
+   --
+   -- Peuple la liste 'liste' avec les noeuds contenus dans l'arbre 'arbre' ayant 'nombre_enfant' enfants.
+   --
    procedure getNoeudsViaNombreEnfants(arbre: in Arbre_Binaire; nombre_enfants: in Integer; liste: in out Liste_Chainee);
 
+   --
+   -- Retourne le sous-arbre de l'arbre 'arbre' précédent le noeud 'noeud'.
+   --
    function getArbreAvant(arbre: in Arbre_Binaire; noeud: in Arbre_Binaire) return Arbre_Binaire;
    
+   --
+   -- Retourne le noeud de l'arbre 'arbre' précédent le noeud 'noeud' d'une distance de 'profondeur'.
+   -- Lève une exception NoeudInexistantException si le noeud précédent n'existe pas.
+   --
    function getNoeudAvant(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return T;
+   --
+   -- Retourne la liste des noeuds de l'arbre 'arbre' précédent le noeud 'noeud' à partir de la distance 'profondeur'.
+   --
    function getSuccessionNoeudsAvant(arbre: in Arbre_Binaire; noeud: in T; profondeur: in Integer) return Liste_Chainee;
 
 private
@@ -46,5 +100,9 @@ private
       contenu: T;
    end record;
    
+   --
+   -- Affiche le noeud racine de l'arbre 'arbre' avec 'espace'*4 espaces à gauche,
+   -- puis affiche son enfant gauche, puis son enfant droit avec '(espace'+1)*4 espaces à gauche.
+   --
    procedure afficher(arbre: in Arbre_Binaire; espace: in Integer);
 end P_Arbre_Binaire;
