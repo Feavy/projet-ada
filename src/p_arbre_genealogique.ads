@@ -18,6 +18,7 @@ package P_Arbre_Genealogique is
    procedure setMere(arbre: in Arbre_Genealogique; idFils: in Integer; mere: in Personne);
 
    procedure afficher(arbre: in Arbre_Genealogique);
+   procedure afficher(arbre: in Arbre_Genealogique; depart: in Personne);
    
    function getSousArbre(arbre: in Arbre_Genealogique; id: in Integer) return Arbre_Genealogique;
    

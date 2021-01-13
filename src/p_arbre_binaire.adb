@@ -108,6 +108,11 @@ package body P_Arbre_Binaire is
       afficher(arbre, 0);
    end afficher;
    
+   procedure afficher(arbre: in Arbre_Binaire; noeud_depart: in T) is
+   begin
+      afficher(getSousArbre(arbre, noeud_depart), 0);
+   end afficher;
+      
    procedure afficher(arbre: in Arbre_Binaire; espace: in Integer) is
    begin
       if arbre = null then
@@ -158,7 +163,6 @@ package body P_Arbre_Binaire is
       
       if profondeur = 0 then
          P_Liste_Chainee_T.ajouter(liste, arbre.contenu);
-         return;
       elsif profondeur > 0 then
          getNoeudsApres(arbre.enfant_gauche, profondeur-1, liste);
          getNoeudsApres(arbre.enfant_droit, profondeur-1, liste);

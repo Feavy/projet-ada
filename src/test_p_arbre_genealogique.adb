@@ -7,16 +7,16 @@ procedure test_p_arbre_genealogique is
    arbre: Arbre_Genealogique;
    liste: Liste_Personne;
 begin
-    --18
-    -- père : 2
-        -- père : 15
-            -- mère : 5
-        -- mère : 26
-            -- père : 4
-    -- mère : 8
-        -- mère : 33
-            -- père : 25
-            -- mère : 42
+--  18 Jean Machin
+    --  2 Paul Machin
+        --  15 Pedro Machin
+            --  5 Camille Machin
+        --  26 Samia Nassri
+            --  4 Frédéric Nassri
+    --  8 Claire Machine
+        --  33 Claire Dupont
+            --  25 Fredo Dupont
+            --  42 Justine Delaqueduc
    arbre := creerArbreGenealogique(creerPersonne(18, "Jean", "Machin"));
    P_Arbre_Genealogique.setPere(arbre, 18, creerPersonne(2, "Paul", "Machin"));
    P_Arbre_Genealogique.setMere(arbre, 18, creerPersonne(8, "Claire", "Machine"));
@@ -52,11 +52,21 @@ begin
    Put_Line("Personnes avec deux parents :");
    liste := getPersonnesAvecDeuxParents(arbre);
    afficher(liste);
+   New_Line;
    
    Put_Line("Deuxième descendant de la personne n° 5 :");
    afficher(getDescendant(arbre, 5, 2));
-   
    New_Line;
+   New_Line;
+   
+   Put_Line("Descendance de la personne n° 5 à partir de la génération 2 :");
+   afficher(getDescendance(arbre, 5, 2));
+   New_Line;
+   
+   Put_Line("Ancêtres de génération 2 de la personne n° 2 :");
+   afficher(getAncetres(arbre, 2, 2));
+   New_Line;
+   
    Put_Line("Suppression du noeud n°2");
    New_Line;
    

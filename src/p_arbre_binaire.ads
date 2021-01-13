@@ -22,6 +22,7 @@ package P_Arbre_Binaire is
    function possedeNoeud(arbre: in Arbre_Binaire; noeud: in T) return Boolean;
    -- Affiche l'arbre binaire en version préfixe
    procedure afficher(arbre: in Arbre_Binaire);
+   procedure afficher(arbre: in Arbre_Binaire; noeud_depart: in T);
    
    function nombreNoeuds(arbre: in Arbre_Binaire) return Integer;
    

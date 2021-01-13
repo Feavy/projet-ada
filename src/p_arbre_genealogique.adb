@@ -37,6 +37,11 @@ package body P_Arbre_Genealogique is
       afficher(Arbre_Binaire(arbre));
    end afficher;
    
+   procedure afficher(arbre: in Arbre_Genealogique; depart: in Personne) is
+   begin
+      afficher(Arbre_Binaire(arbre), depart);
+   end afficher;
+   
    procedure supprimerPersonne(arbre: in out Arbre_Genealogique; id: in Integer) is
    begin
       supprimerNoeud(arbre => Arbre_Binaire(arbre),
@@ -70,7 +75,7 @@ package body P_Arbre_Genealogique is
 
    function getAncetres(arbre: in Arbre_Genealogique; fildId: in Integer; generation: in Integer) return Liste_Personne is
    begin
-      return Liste_Personne(getNoeudsApres(arbre => Arbre_Binaire(arbre),
+      return Liste_Personne(getNoeudsApres(arbre      => Arbre_Binaire(getSousArbre(arbre, fildId)),
                                            profondeur => generation));
    end getAncetres;
    
