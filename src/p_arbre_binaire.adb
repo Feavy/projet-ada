@@ -20,10 +20,6 @@ package body P_Arbre_Binaire is
       end if;
       
       sous_arbre := getSousArbre(arbre, parent);
-      if sous_arbre = null then
-         raise NoeudInexistantException;
-      end if;
-      
       sous_arbre.enfant_droit := new Noeud'(null, null, enfant);
    end setEnfantDroit;
    
@@ -35,12 +31,36 @@ package body P_Arbre_Binaire is
       end if;
       
       sous_arbre := getSousArbre(arbre, parent);
-      if sous_arbre = null then
-         raise NoeudInexistantException;
-      end if;
-      
       sous_arbre.enfant_gauche := new Noeud'(null, null, enfant);
    end setEnfantGauche;
+   
+   function getEnfantDroit(arbre: in Arbre_Binaire; parent: in T) return T is
+      sous_arbre: Arbre_Binaire;
+   begin
+      if arbre = null then
+         raise ArbreVideException;
+      end if;
+      
+      sous_arbre := getSousArbre(arbre, parent);
+      if sous_arbre.enfant_droit = null then
+         raise NoeudInexistantException;
+      end if;
+      return sous_arbre.enfant_droit.contenu;
+   end getEnfantDroit;
+   
+   function getEnfantGauche(arbre: in Arbre_Binaire; parent: in T) return T is
+      sous_arbre: Arbre_Binaire;
+   begin
+      if arbre = null then
+         raise ArbreVideException;
+      end if;
+      
+      sous_arbre := getSousArbre(arbre, parent);
+      if sous_arbre.enfant_gauche = null then
+         raise NoeudInexistantException;
+      end if;
+      return sous_arbre.enfant_gauche.contenu;
+   end getEnfantGauche;
    
    procedure supprimerNoeud(arbre: in out Arbre_Binaire; noeud: in T) is
    begin

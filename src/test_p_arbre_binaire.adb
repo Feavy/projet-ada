@@ -27,7 +27,7 @@ begin
    --                       profondeur => 1));
    arbre2 := getSousArbre(arbre => arbre,
                           noeud => 12);
-   arbre2 := getArbreAvant(arbre      => arbre,
-                           noeud      => arbre2);
+   --arbre2 := getArbreAvant(arbre      => arbre,
+   --                        noeud      => arbre2);
    afficher(arbre2);
 end test_p_arbre_binaire;

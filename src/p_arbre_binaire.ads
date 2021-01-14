@@ -41,6 +41,20 @@ package P_Arbre_Binaire is
    --
    procedure setEnfantGauche(arbre: in Arbre_Binaire; parent: in T; enfant: in T);
    --
+   -- Renvoie l'enfant droit du noeud 'parent' contenu dans l'arbre 'arbre'
+   -- Lève une ArbreVideException si l'arbre' est vide.
+   -- Lève une NoeudInexistantException si 'arbre' ne contient pas le noeud 'parent'
+   -- ou si parent ne contient pas d'enfant droit.
+   --
+   function getEnfantDroit(arbre: in Arbre_Binaire; parent: in T) return T;
+   --
+   -- Renvoie l'enfant gauche du noeud 'parent' contenu dans l'arbre 'arbre'
+   -- Lève une ArbreVideException si l'arbre' est vide.
+   -- Lève une NoeudInexistantException si 'arbre' ne contient pas le noeud 'parent'
+   -- ou si parent ne contient pas d'enfant gauche.
+   --
+   function getEnfantGauche(arbre: in Arbre_Binaire; parent: in T) return T;
+   --
    -- Supprime le noeud 'noeud' et ses enfants de l'arbre binaire 'arbre'
    -- Lève une ArbreVideException si l'arbre' est vide.
    -- Lève une NoeudInexistantException si 'arbre' ne contient pas le noeud 'noeud'.

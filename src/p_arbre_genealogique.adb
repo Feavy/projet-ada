@@ -40,7 +40,9 @@ package body P_Arbre_Genealogique is
    
    procedure afficher(arbre: in Arbre_Genealogique) is
    begin
-      afficher(Arbre_Binaire(arbre), arbre.contenu);
+      afficher(Arbre_Binaire(arbre));
+   exception
+         when NoeudInexistantException => raise PersonneInconnueException;
    end afficher;
    
    procedure afficher(arbre: in Arbre_Genealogique; depart: in Personne) is

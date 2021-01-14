@@ -1,4 +1,5 @@
 with P_Arbre_Genealogique; use P_Arbre_Genealogique;
+use P_Arbre_Genealogique.P_Arbre_Binaire_Personne;
 with P_Personne; use P_Personne;
 
 with Ada.Text_IO; use Ada.Text_IO;
@@ -6,6 +7,7 @@ with Ada.Text_IO; use Ada.Text_IO;
 procedure test_p_arbre_genealogique is
    arbre: Arbre_Genealogique;
    liste: Liste_Personne;
+   pragma Assertion_Policy(CHECK);
 begin
 --  18 Jean Machin
     --  2 Paul Machin
@@ -18,9 +20,13 @@ begin
             --  25 Fredo Dupont
             --  42 Justine Delaqueduc
    arbre := creerArbreGenealogique(creerPersonne(18, "Jean", "Machin"));
-   pragma Assert(not estVide(arbre));
+   pragma Assert(not estVide(arbre), "creerArbreGenealogique ne devrait pas retourner un arbre vide.");
    P_Arbre_Genealogique.setPere(arbre, 18, creerPersonne(2, "Paul", "Machin"));
+   pragma Assert(getEnfantGauche(Arbre_Binaire(arbre), creerPersonne(18)) = creerPersonne(2),
+                "setPere devrait définir correctement l'enfant gauche de l'arbre binaire");
    P_Arbre_Genealogique.setMere(arbre, 18, creerPersonne(8, "Claire", "Machine"));
+   pragma Assert(getEnfantDroit(Arbre_Binaire(arbre), creerPersonne(18)) = creerPersonne(8),
+                "setMere devrait définir correctement l'enfant droit de l'arbre binaire");
    
    P_Arbre_Genealogique.setPere(arbre, 2, creerPersonne(15, "Pedro", "Machin"));
    P_Arbre_Genealogique.setMere(arbre, 2, creerPersonne(26, "Samia", "Nassri"));
