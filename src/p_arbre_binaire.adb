@@ -6,6 +6,11 @@ package body P_Arbre_Binaire is
    begin
       return new Noeud'(null, null, contenu);
    end creerArbreBinaire;
+      
+   function estVide(arbre: in Arbre_Binaire) return Boolean is
+   begin
+      return arbre = null;
+   end estVide;
    
    procedure setEnfantDroit(arbre: in Arbre_Binaire; parent: in T; enfant: in T) is
       sous_arbre: Arbre_Binaire;
@@ -66,7 +71,7 @@ package body P_Arbre_Binaire is
    function getSousArbre(arbre: in Arbre_Binaire; noeud: in T) return Arbre_Binaire is
       sous_arbre: Arbre_Binaire := arbre;
    begin
-      if sous_arbre = null then
+      if arbre = null then
          raise ArbreVideException;
       end if;
       
@@ -81,6 +86,7 @@ package body P_Arbre_Binaire is
          end if;
       exception
          when ArbreVideException => null;
+         when NoeudInexistantException => null;
       end;
       
       sous_arbre := arbre;
@@ -91,15 +97,21 @@ package body P_Arbre_Binaire is
             return sous_arbre;
          end if;
       exception
-         when ArbreVideException => null;
+            when ArbreVideException => null;
+            when NoeudInexistantException => null;
       end;
       
-      return null;
+      raise NoeudInexistantException;
+      --return null;
    end getSousArbre;
    
    function possedeNoeud(arbre: in Arbre_Binaire; noeud: in T) return Boolean is
+      sous_arbre: Arbre_Binaire;
    begin
-      return getSousArbre(arbre, noeud) /= null;
+      sous_arbre := getSousArbre(arbre, noeud);
+      return True;
+   exception
+         when NoeudInexistantException => return False;
    end possedeNoeud;
    
    -- Affiche l'arbre binaire en version préfixe
@@ -158,14 +170,19 @@ package body P_Arbre_Binaire is
    procedure getNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer; liste: in out Liste_Chainee) is
    begin
       if arbre = null then
-         return;
+         raise ArbreVideException;
       end if;
       
       if profondeur = 0 then
          P_Liste_Chainee_T.ajouter(liste, arbre.contenu);
       elsif profondeur > 0 then
-         getNoeudsApres(arbre.enfant_gauche, profondeur-1, liste);
-         getNoeudsApres(arbre.enfant_droit, profondeur-1, liste);
+         if not estVide(arbre.enfant_gauche) then
+            getNoeudsApres(arbre.enfant_gauche, profondeur-1, liste);
+         end if;
+
+         if not estVide(arbre.enfant_droit) then
+            getNoeudsApres(arbre.enfant_droit, profondeur-1, liste);
+         end if;
       end if;
    end getNoeudsApres;
    
@@ -181,15 +198,15 @@ package body P_Arbre_Binaire is
       nombre_enfants_courant: Integer := 0;
    begin
       if arbre = null then
-         return;
+         raise ArbreVideException;
       end if;
       
-      if arbre.enfant_gauche /= null then
+      if not estVide(arbre.enfant_gauche) then
          nombre_enfants_courant := nombre_enfants_courant+1;
          getNoeudsViaNombreEnfants(arbre.enfant_gauche, nombre_enfants, liste);
       end if;
       
-      if arbre.enfant_droit /= null then
+      if not estVide(arbre.enfant_droit) then
          nombre_enfants_courant := nombre_enfants_courant+1;
          getNoeudsViaNombreEnfants(arbre.enfant_droit, nombre_enfants, liste);
       end if;
@@ -202,6 +219,10 @@ package body P_Arbre_Binaire is
    function getArbreAvant(arbre: in Arbre_Binaire; noeud: in Arbre_Binaire) return Arbre_Binaire is
       noeud_avant: Arbre_Binaire;
    begin
+      if arbre = null then
+         raise ArbreVideException;
+      end if;
+    
       if arbre.enfant_droit = noeud or arbre.enfant_gauche = noeud then
          return arbre;
       end if;

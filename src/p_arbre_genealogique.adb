@@ -8,6 +8,8 @@ package body P_Arbre_Genealogique is
    procedure setPere(arbre: in Arbre_Genealogique; enfant: in Personne; pere: in Personne) is
    begin
       setEnfantGauche(Arbre_Binaire(arbre), enfant, pere);
+   exception
+         when NoeudInexistantException => raise PersonneInconnueException;
    end setPere;
    
    procedure setPere(arbre: Arbre_Genealogique; idFils: in Integer; pere: in Personne) is
@@ -19,6 +21,8 @@ package body P_Arbre_Genealogique is
    procedure setMere(arbre: in Arbre_Genealogique; enfant: in Personne; mere: in Personne) is
    begin
       setEnfantDroit(Arbre_Binaire(arbre), enfant, mere);
+   exception
+         when NoeudInexistantException => raise PersonneInconnueException;
    end setMere;
    
    procedure setMere(arbre: Arbre_Genealogique; idFils: in Integer; mere: in Personne) is
@@ -30,22 +34,28 @@ package body P_Arbre_Genealogique is
    function getSousArbre(arbre: in Arbre_Genealogique; id: in Integer) return Arbre_Genealogique is
    begin
       return Arbre_Genealogique(getSousArbre(Arbre_Binaire(arbre), creerPersonne(id)));
+   exception
+         when NoeudInexistantException => raise PersonneInconnueException;
    end getSousArbre;
    
    procedure afficher(arbre: in Arbre_Genealogique) is
    begin
-      afficher(Arbre_Binaire(arbre));
+      afficher(Arbre_Binaire(arbre), arbre.contenu);
    end afficher;
    
    procedure afficher(arbre: in Arbre_Genealogique; depart: in Personne) is
    begin
       afficher(Arbre_Binaire(arbre), depart);
+   exception
+         when NoeudInexistantException => raise PersonneInconnueException;
    end afficher;
    
    procedure supprimerPersonne(arbre: in out Arbre_Genealogique; id: in Integer) is
    begin
       supprimerNoeud(arbre => Arbre_Binaire(arbre),
                      noeud => creerPersonne(id));
+   exception
+         when NoeudInexistantException => raise PersonneInconnueException;
    end supprimerPersonne;
    
    function nombrePersonnes(arbre: in Arbre_Genealogique) return Integer is
@@ -77,6 +87,8 @@ package body P_Arbre_Genealogique is
    begin
       return Liste_Personne(getNoeudsApres(arbre      => Arbre_Binaire(getSousArbre(arbre, filsId)),
                                            profondeur => generation));
+   exception
+         when NoeudInexistantException => raise PersonneInconnueException;
    end getAncetres;
    
    function getDescendant(arbre: in Arbre_Genealogique; filsId: in Integer; generation: in Integer) return Personne is
@@ -94,6 +106,8 @@ package body P_Arbre_Genealogique is
       return Liste_Personne(getSuccessionNoeudsAvant(arbre      => Arbre_Binaire(arbre),
                                                      noeud      => creerPersonne(filsId),
                                                      profondeur => generation));
+   exception
+         when NoeudInexistantException => raise PersonneInconnueException;
    end getDescendance;
    
    

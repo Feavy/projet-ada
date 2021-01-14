@@ -18,6 +18,7 @@ begin
             --  25 Fredo Dupont
             --  42 Justine Delaqueduc
    arbre := creerArbreGenealogique(creerPersonne(18, "Jean", "Machin"));
+   pragma Assert(not estVide(arbre));
    P_Arbre_Genealogique.setPere(arbre, 18, creerPersonne(2, "Paul", "Machin"));
    P_Arbre_Genealogique.setMere(arbre, 18, creerPersonne(8, "Claire", "Machine"));
    
