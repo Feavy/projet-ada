@@ -65,6 +65,12 @@ package body P_Arbre_Genealogique is
       return nombreNoeuds(Arbre_Binaire(arbre));
    end nombrePersonnes;
    
+   function nombreAncetres(arbre: in Arbre_Genealogique; id: in Integer) return Integer is
+      sousArbre: Arbre_Genealogique := getSousArbre(arbre => arbre,
+                                                    id    => id);
+   begin
+      return nombrePersonnes(sousArbre);
+   end nombreAncetres;
    
    function getPersonnesAvecUnSeulParent(arbre: in Arbre_Genealogique) return Liste_Personne is
    begin

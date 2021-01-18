@@ -8,6 +8,9 @@ package P_Var_String is
    end record;
    
    function Var_String(str: String) return T_Var_String;
-   procedure put(str: in T_Var_String);
+   procedure Put(str: in T_Var_String);
    function Image(str: in T_Var_String) return String;
+   procedure Get(str: out T_Var_String);
+   function "="(a: in T_Var_String; b: in T_Var_String) return Boolean;
+   function "="(a: in T_Var_String; b: in String) return Boolean;
 end P_Var_String;

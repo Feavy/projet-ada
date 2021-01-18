@@ -70,6 +70,11 @@ package P_Arbre_Genealogique is
    function nombrePersonnes(arbre: in Arbre_Genealogique) return Integer;
    
    --
+   -- Renvoie le nombre d'ancêtres de la personne d'ID 'id' contenues dans l'arbre 'arbre'.
+   --
+   function nombreAncetres(arbre: in Arbre_Genealogique; id: in Integer) return Integer;
+   
+   --
    -- Supprime de l'arbre 'arbre' la personne d'ID 'id'.
    -- Lève une ArbreVideException si l'arbre' est vide.
    -- Lève une PersonneInconnueException si 'arbre' ne contient pas la personne 'depart'.

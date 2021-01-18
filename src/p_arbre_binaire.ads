@@ -125,6 +125,9 @@ package P_Arbre_Binaire is
 private
    type Noeud;
    type Arbre_Binaire is access Noeud;
+   --
+   -- Noeud d'un arbre binaire
+   --
    type Noeud is record
       enfant_gauche: Arbre_Binaire;
       enfant_droit: Arbre_Binaire;
