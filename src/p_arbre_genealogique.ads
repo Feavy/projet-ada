@@ -102,11 +102,20 @@ package P_Arbre_Genealogique is
 
    --
    -- Renvoie la liste des ancêtres de la personne d'ID 'filsId' contenue dans l'arbre 'arbre'
-   -- éloignés de 'generation' generations de lui.*
+   -- éloignés d'exactement 'generation' generations de lui.
    -- Lève une ArbreVideException si l'arbre' est vide.
    -- Lève une PersonneInconnueException si 'arbre' ne contient pas de personne d'ID 'filsID'.
    --
    function getAncetres(arbre: in Arbre_Genealogique; filsId: in Integer; generation: in Integer) return Liste_Personne;
+   
+   --
+   -- Renvoie la liste des ancêtres de la personne d'ID 'filsId' contenue dans l'arbre 'arbre'
+   -- éloignés d'au moins 'generation' generations de lui.
+   -- Lève une ArbreVideException si l'arbre' est vide.
+   -- Lève une PersonneInconnueException si 'arbre' ne contient pas de personne d'ID 'filsID'.
+   --
+   function getSuccessionAncetres(arbre: in Arbre_Genealogique; filsId: in Integer; generation: in Integer) return Liste_Personne;
+   
    --
    -- Renvoie le descendant de la personne d'ID 'filsId' contenue dans l'arbre 'arbre'
    -- éloigné de 'generation' generations de lui.

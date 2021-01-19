@@ -10,7 +10,7 @@ package body p_interface_utils is
       input: Integer;
    begin
       loop
-         Put_Line(message);
+         Put(message);
          Get(input);
          exit when input >= 0;
       end loop;
@@ -21,11 +21,11 @@ package body p_interface_utils is
       laPersonne: Personne;
    begin
       Put_Line(message);
-      laPersonne.id := demanderEntierPositif("ID :");
+      laPersonne.id := demanderEntierPositif("ID : ");
       Skip_Line;
-      Put_Line("Prenom :");
+      Put("Prenom : ");
       Get(laPersonne.prenom);
-      Put_Line("Nom :");
+      Put("Nom : ");
       Get(laPersonne.nom);
       return laPersonne;
    end demanderPersonne;

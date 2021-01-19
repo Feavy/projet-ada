@@ -10,9 +10,16 @@ procedure interfacePrincipale is
    choice: T_Var_String;
    arbre: Arbre_Genealogique;
    compte: Integer;
+   idPersonne: Integer;
 begin
+   New_Line;
+   Put_Line("BIENVENUE DANS L'INTERFACE DE MANIPULATION D'ARBRE GENEALOGIQUE !");
+   New_Line;
    loop
-      Put_Line(" [Commandes] ");
+      Put_Line("+-----------------+");
+      Put_Line("|    COMMANDES    |");
+      Put_Line("+-----------------+");
+      New_Line;
       Put_Line("creer : Créer un nouvel arbre généaologique.");
       Put_Line("setPere : Définir le père d'une personne de l'arbre.");
       Put_Line("setMere : Définir la mère d'une personne de l'arbre.");
@@ -28,33 +35,38 @@ begin
       Put_Line("descendance : Affiche la succession de descendants d'une personne donnée à partir d'une certaine génération.");
       Put_Line("quitter : Quitte le programme");
       New_Line;
-      Put_Line("Votre choix :");
+      Put("Votre choix : ");
       Get(choice);
+      New_Line;
+      Put_Line("--------");
       New_Line;
       begin
         if choice = "creer" then
-            arbre := creerArbreGenealogique(laPersonne => demanderPersonne("Personne racine :"));
-            Put_Line("L'arbre a bien été créé.");
+            arbre := creerArbreGenealogique(laPersonne => demanderPersonne("Veuillez entrer les information de la personne racine :"));
+            New_Line;
+            Put("L'arbre a bien été créé.");
         elsif choice = "setPere" then
+            idPersonne := demanderEntierPositif("Veuillez entrer l'ID de l'enfant dont il faut associer le père : ");
             setPere(arbre  => arbre,
-                    idFils => demanderEntierPositif("ID de l'enfant :"),
-                    pere   => demanderPersonne("Père à définir :"));
-            Put_Line("Le père a bien été défini.");
-
-        elsif choice = "setMere" then
+                    idFils => idPersonne,
+                    pere   => demanderPersonne("Veuillez entrer les informations du père à définir :"));
+            New_Line;
+            Put("Le père a bien été défini.");
+       elsif choice = "setMere" then
+            idPersonne := demanderEntierPositif("Veuillez entrer l'ID de l'enfant dont il faut associer la mère :");
             setMere(arbre  => arbre,
-                    idFils => demanderEntierPositif("ID de l'enfant :"),
-                    mere   => demanderPersonne("Mère à définir :"));
-            Put_Line("La mère a bien été définie.");
+                    idFils => idPersonne,
+                    mere   => demanderPersonne("Veuillez entrer les informations de la mère à définir :"));
+            New_Line;
+            Put("La mère a bien été définie.");
         elsif choice = "supprimer" then
             supprimerPersonne(arbre => arbre,
-                            id    => demanderEntierPositif("ID de la personne à supprimer "));
-            Put_Line("La personne et ses ancêtres ont bien été supprimés.");
+                              id    => demanderEntierPositif("Veuillez entrer l'ID de la personne à supprimer : "));
+            Put("La personne et ses ancêtres ont bien été supprimés.");
         elsif choice = "nombreAncetres" then
             compte := nombreAncetres(arbre => arbre,
-                                     id    => demanderEntierPositif("ID de la personne dont compter les ancêtres :"));
-
-            Put_Line("Nombre d'ancêtres : " & compte'Image);
+                                     id    => demanderEntierPositif("Veuillez entrer l'ID de la personne dont compter les ancêtres :"));
+            Put("Nombre d'ancêtres : " & compte'Image);
         elsif choice = "afficher" then
             Put_Line("Arbre :");
             afficher(arbre => arbre);
@@ -68,19 +80,25 @@ begin
             Put_Line("Enfants sans parent :");
             afficher(getPersonnesAvecDeuxParents(arbre => arbre));
         elsif choice = "ancetres" then
+            idPersonne := demanderEntierPositif("Veuillez entrer l'ID de la personne dont chercher les ancêtres : ");
             afficher(getAncetres(arbre      => arbre,
-                                filsId     => demanderEntierPositif("ID de la personne dont chercher l'ancêtre :"),
-                                generation => demanderEntierPositif("Génération :")));
+                                 filsId     => idPersonne,
+                                 generation => demanderEntierPositif("Veuillez entrer la génération des ancêtres à chercher : ")));
         elsif choice = "ancetres2" then
-            Put_Line("A faire");
+            idPersonne := demanderEntierPositif("Veuillez entrer l'ID de la personne dont chercher les ancêtres : ");
+            afficher(getSuccessionAncetres(arbre      => arbre,
+                                           filsId     => idPersonne,
+                                           generation => demanderEntierPositif("Veuillez entrer la génération à partir de laquelle chercher : ")));
         elsif choice = "descendant" then
+            idPersonne := demanderEntierPositif("Veuillez entrer l'ID de la personne dont chercher le descendant : ");
             afficher(getDescendant(arbre      => arbre,
-                        filsId     => demanderEntierPositif("ID de la personne dont chercher le descendant : "),
-                        generation => demanderEntierPositif("Génération ")));
+                                   filsId     => idPersonne,
+                                   generation => demanderEntierPositif("Veuillez entrer la génération du descendant : ")));
         elsif choice = "descendance" then
+            idPersonne := demanderEntierPositif("Veuillez entrer l'ID de la personne dont chercher la descendance : ");
             afficher(getDescendance(arbre      => arbre,
-                            filsId     => demanderEntierPositif("ID de la personne dont chercher la descendance : "),
-                            generation => demanderEntierPositif("Génération à partir de laquelle chercher : ")));
+                                    filsId     => idPersonne,
+                                    generation => demanderEntierPositif("Veuillez entrer la génération à partir de laquelle chercher : ")));
         elsif choice = "quitter" then
             Put_Line("Fin du programme");
         else
@@ -91,10 +109,16 @@ begin
          when PersonneInconnueException => Put_Line("Erreur : la personne demandée est inconnue.");
       end;
 
+      New_Line;
+      New_Line;
+
       if choice /= "quitter" then
          Put_Line("Appuyez sur Entrer pour continuer.");
          Skip_Line;
       end if;
+
+      Put_Line("--------");
+      New_Line;
 
       exit when choice = "quitter";
       end loop;

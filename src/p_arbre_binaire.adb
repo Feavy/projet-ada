@@ -206,6 +206,24 @@ package body P_Arbre_Binaire is
       end if;
    end getNoeudsApres;
    
+   function getTousNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer) return Liste_Chainee is
+      liste: Liste_Chainee;
+   begin
+      getTousNoeudsApres(arbre, profondeur, liste);
+      return liste;
+   end getTousNoeudsApres;
+   
+   procedure getTousNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer; liste: in out Liste_Chainee) is
+      profondeurCourante: Integer := profondeur;
+      noeudsCourants: Liste_Chainee;
+   begin
+      noeudsCourants := getNoeudsApres(arbre, profondeurCourante);
+      while not estVide(noeudsCourants) loop
+         ajouterTout(liste, noeudsCourants);
+         profondeurCourante := profondeurCourante+1;
+         noeudsCourants := getNoeudsApres(arbre, profondeurCourante);
+      end loop;
+   end getTousNoeudsApres;
       
    function getNoeudsViaNombreEnfants(arbre: in Arbre_Binaire; nombre_enfants: in Integer) return Liste_Chainee is
       liste: Liste_Chainee := creerListe;

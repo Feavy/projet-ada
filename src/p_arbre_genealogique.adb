@@ -99,6 +99,20 @@ package body P_Arbre_Genealogique is
          when NoeudInexistantException => raise PersonneInconnueException;
    end getAncetres;
    
+   --
+   -- Renvoie la liste des ancêtres de la personne d'ID 'filsId' contenue dans l'arbre 'arbre'
+   -- éloignés d'au moins 'generation' generations de lui.
+   -- Lève une ArbreVideException si l'arbre' est vide.
+   -- Lève une PersonneInconnueException si 'arbre' ne contient pas de personne d'ID 'filsID'.
+   --
+   function getSuccessionAncetres(arbre: in Arbre_Genealogique; filsId: in Integer; generation: in Integer) return Liste_Personne is
+   begin
+      return Liste_Personne(getTousNoeudsApres(arbre      => Arbre_Binaire(getSousArbre(arbre, filsId)),
+                                               profondeur => generation));
+   exception
+         when NoeudInexistantException => raise PersonneInconnueException;
+   end getSuccessionAncetres;
+ 
    function getDescendant(arbre: in Arbre_Genealogique; filsId: in Integer; generation: in Integer) return Personne is
    begin
       return getNoeudAvant(arbre      => Arbre_Binaire(arbre),

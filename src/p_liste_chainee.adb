@@ -19,6 +19,15 @@ package body P_Liste_Chainee is
       liste := newTete;
    end ajouter;
    
+   procedure ajouterTout(liste: in out Liste_Chainee; autre: in Liste_Chainee) is
+      courant: Liste_Chainee := autre;
+   begin
+      while courant /= null loop
+         ajouter(liste, courant.valeur);
+         courant := courant.suivant;
+      end loop;
+   end ajouterTout;
+   
    procedure afficher(liste: in Liste_Chainee) is
       current: Liste_Chainee := liste;
    begin

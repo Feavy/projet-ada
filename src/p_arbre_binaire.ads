@@ -97,6 +97,18 @@ package P_Arbre_Binaire is
    -- Lève une ArbreVideException si l'arbre' est vide.
    --
    procedure getNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer; liste: in out Liste_Chainee);
+   --
+   -- Peuple la liste 'liste' avec les enfants du noeud racine de l'arbre 'arbre' qui sont à une distance 'profondeur' de lui
+   -- ainsi qu'avec tous les enfants situés à une profondeur supérieure
+   -- Lève une ArbreVideException si l'arbre' est vide.
+   --
+   procedure getTousNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer; liste: in out Liste_Chainee);
+   --
+   -- Renvoie la liste des enfants du noeud racine de l'arbre 'arbre' qui sont à une distance 'profondeur' de lui,
+   -- ainsi que tous les enfants situés à une profondeur supérieure
+   -- Lève une ArbreVideException si l'arbre' est vide.
+   --
+   function getTousNoeudsApres(arbre: in Arbre_Binaire; profondeur: in Integer) return Liste_Chainee;
    
    --
    -- Renvoie la liste des noeuds contenus dans l'arbre 'arbre' ayant 'nombre_enfant' enfants.

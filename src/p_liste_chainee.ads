@@ -10,6 +10,7 @@ package P_Liste_Chainee is
    function creerListe return Liste_Chainee;
    function estVide(liste: in Liste_Chainee) return Boolean;
    procedure ajouter(liste: in out Liste_Chainee; valeur: in T_Valeur);
+   procedure ajouterTout(liste: in out Liste_Chainee; autre: in Liste_Chainee);
    procedure afficher(liste: in Liste_Chainee);
    function trouver(liste: in Liste_Chainee; valeur: in T_Valeur) return Liste_Chainee;
    procedure supprimer(liste: in out Liste_Chainee; valeur: in T_Valeur);
