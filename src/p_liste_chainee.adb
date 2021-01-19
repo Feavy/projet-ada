@@ -50,6 +50,26 @@ package body P_Liste_Chainee is
       return current;
    end trouver;
    
+   function get(liste: in Liste_Chainee; indice: in Integer) return T_Valeur is
+      courant: Liste_Chainee := liste;
+   begin
+      for i in 1..indice loop
+         courant := courant.all.suivant;
+      end loop;
+      return courant.all.valeur;
+   end get;
+   
+   function taille(liste: in Liste_Chainee) return Integer is
+      res: Integer := 0;
+      courant: Liste_Chainee := liste;
+   begin
+      while courant /= null loop
+         courant := courant.all.suivant;
+         res := res+1;
+      end loop;
+      return res;
+   end taille;
+   
    procedure supprimer(liste: in out Liste_Chainee; valeur: in T_Valeur) is
       current: Liste_Chainee := liste;
    begin

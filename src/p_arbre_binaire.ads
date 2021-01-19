@@ -13,6 +13,10 @@ package P_Arbre_Binaire is
    -- Levée si un noeud de l'arbre n'existe pas.
    --
    NoeudInexistantException: Exception;
+   --
+   -- Levée si l'on veut ajouter un noeud qui est déjà présent dans l'arbre.
+   --
+   NoeudDejaPresentException: Exception;
      
    type Arbre_Binaire is private;
    

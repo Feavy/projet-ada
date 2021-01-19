@@ -7,6 +7,11 @@ package P_Arbre_Genealogique is
    -- Levée si une personne n'existe pas dans l'arbre.
    --
    PersonneInconnueException: Exception;
+   
+   --
+   -- Levée si l'on veut ajouter une personne qui est déjà présente dans l'arbre.
+   --
+   PersonneDejaPresenteException: Exception;
 
    package P_Arbre_Binaire_Personne is new P_Arbre_Binaire(T               => P_Personne.Personne,
                                                            afficherContenu => P_Personne.afficher,
@@ -64,6 +69,10 @@ package P_Arbre_Genealogique is
    --
    function getSousArbre(arbre: in Arbre_Genealogique; id: in Integer) return Arbre_Genealogique;
    
+   --
+   -- Renvoie Vrai si l'arbre 'arbre' possède une personne d'ID 'id'.
+   --
+   function possedePersonne(arbre: in Arbre_Genealogique; id: in Integer) return Boolean;
    --
    -- Renvoie le nombre de personnes contenues dans l'arbre 'arbre', 0 si l'arbre est vide.
    --

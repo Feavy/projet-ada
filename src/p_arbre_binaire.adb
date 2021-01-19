@@ -18,7 +18,10 @@ package body P_Arbre_Binaire is
       if arbre = null then
          raise ArbreVideException;
       end if;
-      
+      if possedeNoeud(arbre, enfant) then
+         raise NoeudDejaPresentException;
+      end if;
+     
       sous_arbre := getSousArbre(arbre, parent);
       sous_arbre.enfant_droit := new Noeud'(null, null, enfant);
    end setEnfantDroit;
@@ -28,6 +31,9 @@ package body P_Arbre_Binaire is
    begin
       if arbre = null then
          raise ArbreVideException;
+      end if;
+      if possedeNoeud(arbre, enfant) then
+         raise NoeudDejaPresentException;
       end if;
       
       sous_arbre := getSousArbre(arbre, parent);

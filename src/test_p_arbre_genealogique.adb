@@ -7,6 +7,7 @@ with Ada.Text_IO; use Ada.Text_IO;
 procedure test_p_arbre_genealogique is
    arbre: Arbre_Genealogique;
    liste: Liste_Personne;
+   unePersonne: Personne;
    pragma Assertion_Policy(CHECK);
 begin
 --  18 Jean Machin
@@ -42,36 +43,68 @@ begin
    
    P_Arbre_Genealogique.afficher(arbre);
    
+   Put_Line("Ajout d'une personne déjà présente");
+   begin
+      P_Arbre_Genealogique.setPere(arbre, 25, creerPersonne(15, "ID", "dejapris"));
+      pragma Assert(False, "Le fait d'ajouter une personne déjà existante dans l'arbre devrait lever une exception.");
+   exception
+      when PersonneDejaPresenteException => null;
+   end;
+     
    New_Line;
    
    Put_Line("Personnes sans parent :");
    liste := getPersonnesSansParent(arbre);
    afficher(liste);
+   pragma Assert(taille(liste) = 4);
+   pragma Assert(get(liste, 0).id = 42);
+   pragma Assert(get(liste, 1).id = 25);
+   pragma Assert(get(liste, 2).id = 4);
+   pragma Assert(get(liste, 3).id = 5);
    
    New_Line;
    
    Put_Line("Personnes avec un seul parent :");
    liste := getPersonnesAvecUnSeulParent(arbre);
    afficher(liste);
+   pragma Assert(taille(liste) = 3);
+   pragma Assert(get(liste, 0).id = 8);
+   pragma Assert(get(liste, 1).id = 26);
+   pragma Assert(get(liste, 2).id = 15);
    
    New_Line;
    
    Put_Line("Personnes avec deux parents :");
    liste := getPersonnesAvecDeuxParents(arbre);
    afficher(liste);
+   pragma Assert(taille(liste) = 3);
+   pragma Assert(get(liste, 0).id = 18);
+   pragma Assert(get(liste, 1).id = 33);
+   pragma Assert(get(liste, 2).id = 2);
+   
    New_Line;
    
    Put_Line("Deuxième descendant de la personne n° 5 :");
-   afficher(getDescendant(arbre, 5, 2));
+   unePersonne := getDescendant(arbre, 5, 2);
+   afficher(unePersonne);
+   pragma Assert(unePersonne.id = 2);
    New_Line;
    New_Line;
    
    Put_Line("Descendance de la personne n° 5 à partir de la génération 2 :");
-   afficher(getDescendance(arbre, 5, 2));
+   liste := getDescendance(arbre, 5, 2);
+   afficher(liste);
+   pragma Assert(taille(liste) = 2);
+   pragma Assert(get(liste, 0).id = 18);
+   pragma Assert(get(liste, 1).id = 2);
    New_Line;
    
    Put_Line("Ancêtres de génération 2 de la personne n° 2 :");
-   afficher(getAncetres(arbre, 2, 2));
+   liste := getAncetres(arbre, 2, 2);
+   afficher(liste);
+   pragma Assert(taille(liste) = 2);
+   pragma Assert(get(liste, 0).id = 4);
+   pragma Assert(get(liste, 1).id = 5);
    New_Line;
    
    Put_Line("Suppression du noeud n°2");
@@ -81,7 +114,15 @@ begin
    
    P_Arbre_Genealogique.afficher(arbre);
    
+   pragma Assert(not P_Arbre_Genealogique.possedePersonne(arbre, 2), "L'arbre ne devrait plus posséder de personne d'ID 2.");
+   
    New_Line;
    Put_Line("Obtention d'un descendant inconnu.");
-   afficher(getDescendant(arbre, 18, 1));
-end test_p_arbre_genealogique;
+   begin
+      afficher(getDescendant(arbre, 18, 1));
+      pragma Assert(False, "Une PersonneInconnueException aurait dû être levée");
+   exception
+      when PersonneInconnueException => null;
+   end;
+   
+   end test_p_arbre_genealogique;

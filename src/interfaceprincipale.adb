@@ -107,6 +107,7 @@ begin
       exception
          when P_Arbre_Binaire_Personne.ArbreVideException => Put_Line("Erreur : l'arbre est vide.");
          when PersonneInconnueException => Put_Line("Erreur : la personne demandée est inconnue.");
+         when PersonneDejaPresenteException => Put_Line("Erreur : une personne avec cet ID est déjà présente dans l'arbre.");
       end;
 
       New_Line;

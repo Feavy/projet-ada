@@ -9,7 +9,8 @@ package body P_Arbre_Genealogique is
    begin
       setEnfantGauche(Arbre_Binaire(arbre), enfant, pere);
    exception
-         when NoeudInexistantException => raise PersonneInconnueException;
+      when NoeudInexistantException => raise PersonneInconnueException;
+      when NoeudDejaPresentException => raise PersonneDejaPresenteException;
    end setPere;
    
    procedure setPere(arbre: Arbre_Genealogique; idFils: in Integer; pere: in Personne) is
@@ -22,7 +23,8 @@ package body P_Arbre_Genealogique is
    begin
       setEnfantDroit(Arbre_Binaire(arbre), enfant, mere);
    exception
-         when NoeudInexistantException => raise PersonneInconnueException;
+      when NoeudInexistantException => raise PersonneInconnueException;
+      when NoeudDejaPresentException => raise PersonneDejaPresenteException;
    end setMere;
    
    procedure setMere(arbre: Arbre_Genealogique; idFils: in Integer; mere: in Personne) is
@@ -37,6 +39,12 @@ package body P_Arbre_Genealogique is
    exception
          when NoeudInexistantException => raise PersonneInconnueException;
    end getSousArbre;
+   
+   function possedePersonne(arbre: in Arbre_Genealogique; id: in Integer) return Boolean is
+   begin
+      return P_Arbre_Binaire_Personne.possedeNoeud(arbre => Arbre_Binaire(arbre),
+                                                   noeud => creerPersonne(id));
+   end possedePersonne;
    
    procedure afficher(arbre: in Arbre_Genealogique) is
    begin
