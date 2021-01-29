@@ -42,7 +42,7 @@ begin
       New_Line;
       begin
         if choice = "creer" then
-            arbre := creerArbreGenealogique(laPersonne => demanderPersonne("Veuillez entrer les information de la personne racine :"));
+            arbre := creerArbreGenealogique(laPersonne => demanderPersonne("Veuillez entrer les informations de la personne racine :"));
             New_Line;
             Put("L'arbre a bien été créé.");
         elsif choice = "setPere" then

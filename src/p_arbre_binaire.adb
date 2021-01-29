@@ -83,13 +83,19 @@ package body P_Arbre_Binaire is
          return;
       end if;
       
-      if arbre.enfant_droit /= null and then arbre.enfant_droit.contenu = noeud then
-         arbre.enfant_droit := null;
-      elsif arbre.enfant_gauche /= null and then arbre.enfant_gauche.contenu = noeud then
-         arbre.enfant_gauche := null;
-      else
-         supprimerNoeud(arbre.enfant_droit, noeud);
-         supprimerNoeud(arbre.enfant_gauche, noeud);
+      if arbre.enfant_droit /= null then
+         if arbre.enfant_droit.contenu = noeud then
+            arbre.enfant_droit := null;
+         elsif possedeNoeud(arbre.enfant_droit, noeud) then
+               supprimerNoeud(arbre.enfant_droit, noeud);
+         end if;
+      end if;
+      if arbre.enfant_gauche /= null then
+         if arbre.enfant_gauche.contenu = noeud then
+            arbre.enfant_gauche := null;
+         elsif possedeNoeud(arbre.enfant_gauche, noeud) then
+            supprimerNoeud(arbre.enfant_gauche, noeud);
+         end if;
       end if;
       
    end supprimerNoeud;
@@ -313,10 +319,9 @@ package body P_Arbre_Binaire is
    begin
       noeud2 := getArbreAvant(arbre, noeud, profondeur);
       
-      loop
+      while noeud2 /= null loop
          P_Liste_Chainee_T.ajouter(liste_noeuds, noeud2.contenu);
          noeud2 := getArbreAvant(arbre, noeud2);
-         exit when noeud2 = null;
       end loop;
       
       return liste_noeuds;
